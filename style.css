@@ -1,0 +1,834 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Ubuntu+Mono:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+
+  background: #3e3e3e;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+h2 {
+  font-size: 50px;
+  color: #1b1b1b;
+}
+
+.sudoku-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  text-align: center;
+}
+
+.sudoku-box-row {
+  display: flex;
+  gap: 10px;
+}
+
+.block-green {
+  width: 98px;
+  height: 98px;
+  padding: 27px;
+  border-radius: 5px;
+  background: #9cffc9;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.block-red {
+  width: 98px;
+  height: 98px;
+  border-radius: 5px;
+  background: #ffb59c;
+  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+}
+
+.buttons-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.buttons-box button {
+  background: none;
+  border: none;
+  font-size: 19px;
+  font-weight: 400;
+  color: #ffff;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.buttons-box a {
+  padding: 15px;
+  width: 100px;
+  text-decoration: none;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+  transition: .2s;
+  background-color: rgba(255, 255, 255, .2);
+}
+
+.buttons-box a:hover {
+  transform: scale(1.05);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.main-button {
+  border: none;
+  padding: 15px 50px;
+  border-radius: 40px;
+  background: #9cffc9;
+  font-size: 19px;
+  justify-self: center;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.main-button:hover {
+  transform: scale(1.1);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.head h4 {
+  font-size: 20px;
+  color: #9cffc9;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 20px;
+  color: white;
+  letter-spacing: 2px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 15px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 120px;
+  justify-content: center;
+}
+
+.time .clock {
+  width: 25px;
+}
+
+.back-button img {
+  width: 28px;
+}
+
+.back-button {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.back-button:hover {
+  transform: translateX(-5px);
+}
+
+.sudoku-grid {
+  text-align: center;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  width: fit-content;
+  margin: 0 auto;
+  table-layout: fixed;
+}
+
+tr, td {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.sudoku-grid {
+  display: table;
+  border-spacing: 2px;
+  border-collapse: separate;
+}
+
+tr:nth-child(4) td,
+tr:nth-child(8) td,
+tr:nth-child(12) td {
+  margin-bottom: 16px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+td:nth-child(4),
+td:nth-child(8),
+td:nth-child(12) {
+  border-right: 2px solid rgba(0, 0, 0, 0.1);
+  padding-right: 16px;
+}
+
+table td {
+  width: 40px;
+  height: 40px;
+  background: white;
+  transition: all 0.3s ease;
+  padding: 0;
+  margin: 0;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  font-weight: 600;
+  border: none;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  background: white;
+  transition: background-color 0.2s ease;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input:hover {
+  background-color: #fff7e6;
+  transform: scale(1.02);
+}
+
+input:focus {
+  background-color: #d6fae6;
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(156, 255, 201, 0.3);
+}
+
+.bottom-box {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.sucess-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: #ffff;
+  background-color: rgb(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 15px;
+  gap: 5px;
+
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.sucess-box button {
+  background: none;
+  border: none;
+
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.sucess-box button:hover {
+  transform: rotateZ(-140deg);
+}
+
+.celula-alterada {
+  background-color: #d6fae6;
+}
+
+.hide {
+  display: none !important;
+}
+
+.sudoku-size {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.sudoku-size h3 {
+  color: #9cffc9;
+  text-align: center;
+}
+
+.difficulty-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.difficulty-buttons a {
+  width: auto;
+  min-width: 100px;
+}
+
+.initial-cell {
+  background-color: #f8f9fa;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.initial-cell:hover {
+  transform: none;
+  background-color: #f8f9fa;
+}
+
+.size-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.size-button {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 19px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.size-button:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.size-button.active {
+  background-color: #9cffc9;
+  color: #1b1b1b;
+}
+
+.hide {
+  display: none;
+}
+
+#new-game-button {
+  background: linear-gradient(145deg, #ffb59c, #ff9b7a);
+}
+
+#new-game-button:hover {
+  transform: scale(1.1);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.wrong-answer {
+  background-color: #ffebee !important;
+  color: #ff5252 !important;
+  outline: 2px solid #ff5252 !important;
+  transition: all 0.3s ease;
+}
+
+input.wrong-answer:focus {
+  outline: 2px solid #ff5252 !important;
+  box-shadow: 0 0 5px rgba(255, 82, 82, 0.5) !important;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.lives {
+  color: white;
+  font-size: 16px;
+}
+
+.head {
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.game-over-content {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.game-over-content h2 {
+  color: #ff5252;
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.game-over-content p {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.game-over-content button {
+  background: #9cffc9;
+  padding: 15px 40px;
+  font-size: 20px;
+  transition: transform 0.2s;
+}
+
+.game-over-content button:hover {
+  transform: scale(1.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.game-over-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.game-over-content button {
+  background: #9cffc9;
+  padding: 15px 40px;
+  font-size: 20px;
+  transition: transform 0.2s;
+}
+
+.game-over-content button:hover {
+  transform: scale(1.1);
+}
+
+/* Style cho nút trở lại */
+#back-to-menu {
+  background: #ffb59c;
+}
+
+/* Style chung cho container */
+.main-sudoku {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Style cho header */
+.head {
+  background: linear-gradient(135deg, rgba(156, 255, 201, 0.2), rgba(255, 181, 156, 0.2));
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.head h4 {
+  font-size: 28px;
+  font-weight: 600;
+  background: linear-gradient(45deg, #9cffc9, #ffb59c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+/* Style cho bảng Sudoku */
+table {
+  border-collapse: separate;
+  border-spacing: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+/* Style cho ô input */
+table td {
+  width: 45px;
+  height: 45px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+  font-size: 22px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+}
+
+/* Style cho ô được hover và focus */
+input:hover {
+  background: #fff7e6;
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+input:focus {
+  background: #d6fae6;
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(156, 255, 201, 0.3);
+  outline: none;
+}
+
+/* Style cho timer và lives */
+.stats {
+  display: flex;
+  gap: 20px;
+}
+
+.time, .lives {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 18px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Style cho buttons */
+.bottom-box {
+  margin-top: 30px;
+  gap: 25px;
+}
+
+.main-button {
+  padding: 15px 60px;
+  border: none;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#solve-button {
+  background: linear-gradient(45deg, #9cffc9, #7ee6a5);
+  box-shadow: 0 4px 15px rgba(156, 255, 201, 0.4);
+}
+
+#new-game-button {
+  background: linear-gradient(45deg, #ffb59c, #ff9b7a);
+  box-shadow: 0 4px 15px rgba(255, 181, 156, 0.4);
+}
+
+.main-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Style cho ô ban đầu */
+.initial-cell {
+  background: #f8f9fa;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* Thêm border đặc biệt cho khối 4x4 */
+tr:nth-child(4) td,
+tr:nth-child(8) td,
+tr:nth-child(12) td {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 8px;
+}
+
+td:nth-child(4),
+td:nth-child(8),
+td:nth-child(12) {
+  border-right: 2px solid rgba(0, 0, 0, 0.1);
+  padding-right: 8px;
+}
+
+/* Style cho back button */
+.back-button {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-5px);
+}
+
+/* Thêm style mới cho timer */
+.time {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 15px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 120px;
+  justify-content: center;
+}
+
+.time img {
+  width: 20px;
+  height: 20px;
+}
+
+.time p {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin: 0;
+  min-width: 75px;
+}
+
+/* Style cho ô đang được xét */
+input.checking {
+  background-color: #ff6b6b !important;
+  transition: background-color 0.2s ease;
+}
+
+input.trying {
+  background-color: #ffd700 !important;
+}
+
+input.backtracking {
+  background-color: #ff8c00 !important;
+}
+
+input[type="number"] {
+    transition: background-color 0.3s ease;
+}
+
+.initial-cell {
+    color: #2c3e50 !important;
+    font-weight: 700 !important;
+}
+
+input[type="number"]:disabled {
+    opacity: 1 !important;
+}
+
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: #3e3e3e;
+}
+
+/* Thêm style mới cho nút 9x9 */
+.size-button[data-size="9"] {
+    background-color: #FFB59C;  /* Màu hồng cam nhạt */
+    color: #1b1b1b;
+}
+
+/* Thêm màu xanh nhạt cho nút 16x16 */
+.size-button[data-size="16"] {
+    background-color: #9CFFC9;  /* Màu xanh nhạt */
+    color: #1b1b1b;
+}
+
+.size-button:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.size-button.active {
+    background-color: #9cffc9;
+    color: #1b1b1b;
+}
+
+/* Animation cho chữ */
+@keyframes fadeInScale {
+    0% {
+        opacity: 0.8;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Animation cho blocks chứa chữ */
+@keyframes floatBlock {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(3deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+/* Style cho SUDOKU blocks */
+.sudoku-box .block-green h2 {
+    animation: fadeInScale 2s ease-out infinite;
+    transition: transform 0.3s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+}
+
+.sudoku-box .block-green {
+    animation: floatBlock 2s ease-out infinite;
+    transition: all 0.3s ease;
+    transform-origin: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1),
+                0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation delay cho từng block có chữ */
+.sudoku-box-row:nth-child(1) .block-green:nth-child(1), 
+.sudoku-box-row:nth-child(1) .block-green:nth-child(1) h2 { /* S */
+    animation-delay: 0s;
+}
+.sudoku-box-row:nth-child(1) .block-green:nth-child(2),
+.sudoku-box-row:nth-child(1) .block-green:nth-child(2) h2 { /* U */
+    animation-delay: 0.2s;
+}
+.sudoku-box-row:nth-child(2) .block-green:nth-child(2),
+.sudoku-box-row:nth-child(2) .block-green:nth-child(2) h2 { /* D */
+    animation-delay: 0.4s;
+}
+.sudoku-box-row:nth-child(2) .block-green:nth-child(3),
+.sudoku-box-row:nth-child(2) .block-green:nth-child(3) h2 { /* O */
+    animation-delay: 0.6s;
+}
+.sudoku-box-row:nth-child(3) .block-green:nth-child(1),
+.sudoku-box-row:nth-child(3) .block-green:nth-child(1) h2 { /* K */
+    animation-delay: 0.8s;
+}
+.sudoku-box-row:nth-child(3) .block-green:nth-child(2),
+.sudoku-box-row:nth-child(3) .block-green:nth-child(2) h2 { /* U */
+    animation-delay: 1s;
+}
+
+/* Hover effect cho SUDOKU blocks */
+.sudoku-box .block-green:hover {
+    transform: translateY(-5px) scale(1.1) rotate(5deg);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Style riêng cho các nút kích thước */
+.size-selector {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.size-button {
+    width: 150px;
+    height: 50px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 19px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.size-button[data-size="9"] {
+    background-color: #FFB59C;
+    color: #1b1b1b;
+}
+
+.size-button[data-size="16"] {
+    background-color: #9CFFC9;
+    color: #1b1b1b;
+}
+
+.size-button:hover {
+    transform: scale(1.05);
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sudoku Solver</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  </head>
+  <body>
+    <div id="particles-js"></div>
+    
+    <main>
+      <div class="sudoku-box">
+        <div class="sudoku-box-row">
+          <div class="block-green"><h2>S</h2></div>
+          <div class="block-green"><h2>U</h2></div>
+          <div class="block-red"></div>
+        </div>
+        <div class="sudoku-box-row">
+          <div class="block-red"></div>
+          <div class="block-green"><h2>D</h2></div>
+          <div class="block-green"><h2>O</h2></div>
+        </div>
+        <div class="sudoku-box-row">
+          <div class="block-green"><h2>K</h2></div>
+          <div class="block-green"><h2>U</h2></div>
+          <div class="block-red"></div>
+        </div>
+      </div>
+
+      <div class="buttons-box">
+        <div class="size-selector">
+          <button class="size-button" data-size="9">9x9</button>
+          <button class="size-button" data-size="16">16x16</button>
+        </div>
+
+        <div class="sudoku-size hide" id="size-9">
+          <h3>9x9</h3>
+          <div class="difficulty-buttons">
+            <a href="./sudoku.html?sudoku=9&difficulty=easy">
+              <button>Dễ</button>
+            </a>
+            <a href="./sudoku.html?sudoku=9&difficulty=medium">
+              <button>Trung bình</button>
+            </a>
+            <a href="./sudoku.html?sudoku=9&difficulty=hard">
+              <button>Khó</button>
+            </a>
+            <a href="./sudoku.html?sudoku=9&difficulty=genius">
+              <button>Thiên tài</button>
+            </a>
+          </div>
+        </div>
+
+        <div class="sudoku-size hide" id="size-16">
+          <h3>16x16</h3>
+          <div class="difficulty-buttons">
+            <a href="./sudoku.html?sudoku=16&difficulty=easy">
+              <button>Dễ</button>
+            </a>
+            <a href="./sudoku.html?sudoku=16&difficulty=medium">
+              <button>Trung bình</button>
+            </a>
+            <a href="./sudoku.html?sudoku=16&difficulty=hard">
+              <button>Khó</button>
+            </a>
+            <a href="./sudoku.html?sudoku=16&difficulty=genius">
+              <button>Thiên tài</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const sizeButtons = document.querySelectorAll('.size-button');
+        const sizeContainers = document.querySelectorAll('.sudoku-size');
+
+        sizeButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            sizeButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            sizeContainers.forEach(container => container.classList.add('hide'));
+            const selectedSize = button.getAttribute('data-size');
+            document.getElementById(`size-${selectedSize}`).classList.remove('hide');
+          });
+        });
+      });
+
+      particlesJS.load('particles-js', 'particles.json', function() {
+        console.log('particles.js loaded - callback');
+      });
+    </script>
+  </body>
+</html>

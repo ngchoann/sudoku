@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sudoku Solver</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  </head>
+  <body>
+    <div id="particles-js"></div>
+    <div id="game-over" class="game-over hide">
+      <div class="game-over-content">
+        <h2>Game Over!</h2>
+        <p>Bạn đã hết lượt thử</p>
+        <div class="game-over-buttons">
+          <button id="restart-button" class="main-button">Chơi lại</button>
+          <button id="back-to-menu" class="main-button">Trở lại</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-sudoku">
+      <div class="head">
+        <a href="./index.html" class="back-button">
+          <img src="./assets/arrow-left.svg" alt="" />
+        </a>
+        <h4>sudoku</h4>
+        <div class="stats">
+          <div class="time">
+            <img src="./assets/alarm.svg" alt="" />
+            <p id="tempo">00:00:00</p>
+          </div>
+          <div class="lives">
+            <p id="lives-display">Còn 5 lượt</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sudoku-grid" id="sudoku-grid">
+        
+      </div>
+
+      <div class="bottom-box">
+        <button id="solve-button" class="main-button">Solve</button>
+        <button id="new-game-button" class="main-button">Reset</button>
+      </div>
+    </div>
+
+    <script src="./index.js" type="module"></script>
+    <script>
+        particlesJS.load('particles-js', 'particles.json', function() {
+            console.log('particles.js loaded - callback');
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+{
+    "particles": {
+        "number" :{
+            "value":20
+        },
+        "color":{
+            "value":"#eaeaea"
+        },
+        "shape":{
+            "type":"image",
+            "image":{
+                "src":"assets/anhdao.png"
+
+            }
+        },
+        "move":{
+            "direction":"bottom",
+            "random":"true",
+            "out_mode":"out",
+            "speed":1.5,
+            "attract":{
+                "enable":"true",
+                
+                "rolateY":1000
+            }
+        },
+        "line_linked": {
+            "opacity": "0"
+        },
+        "size":{
+            "random":"true"
+        }
+    }
+}
