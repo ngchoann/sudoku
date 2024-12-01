@@ -23,12 +23,12 @@
     <div class="main-sudoku">
       <div class="head">
         <a href="./index.html" class="back-button">
-          <img src="./assets/arrow-left.svg" alt="" />
+          <img src="../assets/arrow-left.svg" alt="" />
         </a>
         <h4>sudoku</h4>
         <div class="stats">
           <div class="time">
-            <img src="./assets/alarm.svg" alt="" />
+            <img src="../assets/alarm.svg" alt="" />
             <p id="tempo">00:00:00</p>
           </div>
           <div class="lives">
@@ -49,9 +49,9 @@
 
     <script src="./index.js" type="module"></script>
     <script>
-        particlesJS.load('particles-js', 'particles.json', function() {
-            console.log('particles.js loaded - callback');
-        });
+        particlesJS.load('particles-js', './particles.json', function() {
+      console.log('particles.js loaded - callback');
+  });
     </script>
   </body>
 </html>

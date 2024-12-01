@@ -9,8 +9,7 @@
         "shape":{
             "type":"image",
             "image":{
-                "src":"assets/anhdao.png"
-
+                "src":"../assets/anhdao.png"
             }
         },
         "move":{

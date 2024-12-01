@@ -1,0 +1,26 @@
+# Thư mục node_modules
+node_modules/
+
+# File hệ thống
+.DS_Store
+Thumbs.db
+
+# File môi trường
+.env
+.env.local
+
+# File log
+*.log
+
+# Thư mục build/dist
+/dist
+/build
+
+# File IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# File cache
+.cache/
