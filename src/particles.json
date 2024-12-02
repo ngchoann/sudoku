@@ -1,7 +1,7 @@
 {
     "particles": {
         "number" :{
-            "value":20
+            "value":30
         },
         "color":{
             "value":"#eaeaea"
@@ -16,7 +16,7 @@
             "direction":"bottom",
             "random":"true",
             "out_mode":"out",
-            "speed":1.5,
+            "speed":1.9,
             "attract":{
                 "enable":"true",
                 
