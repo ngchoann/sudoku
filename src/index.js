@@ -298,14 +298,30 @@ class Tabuleiro {
     return false;
   }
   encontraCor0() {
+    let maxConstraints = -1;
+    let selectedCell = null;
+
     for (let linha = 0; linha < this.tamanho; linha++) {
-      for (let coluna = 0; coluna < this.tamanho; coluna++) {
-        if (this.tabuleiro[linha][coluna].cor == 0) {
-          return this.tabuleiro[linha][coluna]; //retorna o vertice cuja cor é nula
+        for (let coluna = 0; coluna < this.tamanho; coluna++) {
+            const vertice = this.tabuleiro[linha][coluna];
+            if (vertice.cor == 0) {
+                // Đếm số ô liền kề đã được điền
+                let constraints = 0;
+                for (let adj of vertice.adj) {
+                    if (adj.cor !== 0) {
+                        constraints++;
+                    }
+                }
+
+                // Chọn ô có nhiều ràng buộc nhất
+                if (constraints > maxConstraints) {
+                    maxConstraints = constraints;
+                    selectedCell = vertice;
+                }
+            }
         }
-      }
     }
-    return null;
+    return selectedCell;
   }
   backtracking() {
     var v_livre = this.encontraCor0();
@@ -353,6 +369,106 @@ class Tabuleiro {
     this.tabuleiro[row][col].cor = currentValue;
     
     return isValid;
+  }
+
+  async visualBacktracking() {
+    const grid = document.getElementById("sudoku-grid");
+    const inputs = grid.getElementsByTagName("input");
+
+    // Điều chỉnh delay dựa trên kích thước bảng
+    const baseDelay = TAM === 16 ? 50 : 100;
+
+    async function backtrack() {
+        var v_livre = tabuleiro.encontraCor0();
+        if (v_livre == null) {
+            return true;
+        }
+
+        const currentIndex = v_livre.loc[0] * TAM + v_livre.loc[1];
+
+        // Hiển thị ô đang xét
+        inputs[currentIndex].style.backgroundColor = '#ff6b6b';
+        await delay(baseDelay);
+
+        for (let cor = 1; cor <= TAM; cor++) {
+            if (tabuleiro.colorIsValid(cor, v_livre)) {
+                // Hiển thị giá trị đang thử và màu tương ứng
+                v_livre.setColor(cor);
+                inputs[currentIndex].value = cor;
+                inputs[currentIndex].style.backgroundColor = NUMBER_COLORS[cor];
+                await delay(baseDelay);
+
+                if (await backtrack()) {
+                    return true;
+                }
+
+                // Nếu không tìm được giải pháp, quay lui
+                inputs[currentIndex].style.backgroundColor = '#ff8c00';
+                await delay(baseDelay);
+
+                // Reset giá trị
+                v_livre.setColor(0);
+                inputs[currentIndex].value = '';
+                inputs[currentIndex].style.backgroundColor = '#ff6b6b';
+                await delay(baseDelay);
+            }
+        }
+
+        // Khi đã thử hết các giá trị có thể
+        v_livre.setColor(0);
+        inputs[currentIndex].value = '';
+        inputs[currentIndex].style.backgroundColor = '#ffebee';
+
+        // Tìm ô trước đó để quay lui
+        let prevIndex = -1;
+        for (let i = currentIndex - 1; i >= 0; i--) {
+            if (!inputs[i].classList.contains("initial-cell") && inputs[i].value !== '') {
+                prevIndex = i;
+                break;
+            }
+        }
+
+        if (prevIndex !== -1) {
+            // Hiển thị đường đi quay lui
+            await delay(baseDelay);
+            inputs[prevIndex].style.backgroundColor = '#ff6b6b';
+            await delay(baseDelay);
+        }
+
+        return false;
+    }
+
+    // Disable tất cả input và buttons trong quá trình giải
+    const allInputs = document.getElementsByTagName("input");
+    const buttons = document.getElementsByTagName("button");
+
+    for (let input of allInputs) {
+        if (!input.classList.contains("initial-cell")) {
+            input.disabled = true;
+        }
+    }
+
+    for (let button of buttons) {
+        button.disabled = true;
+    }
+
+    try {
+        await backtrack();
+    } finally {
+        // Enable lại input và buttons sau khi giải xong
+        for (let input of allInputs) {
+            if (!input.classList.contains("initial-cell")) {
+                input.disabled = false;
+            }
+        }
+
+        for (let button of buttons) {
+            button.disabled = false;
+        }
+
+        // Cập nhật lại bảng với kết quả cuối cùng và màu sắc tương ứng
+        updateBoard();
+    }
   }
 }
 
@@ -485,14 +601,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Xử lý nút Resolver
   document.getElementById('solve-button').addEventListener('click', async () => {
-    // Disable nút trong quá trình giải
-    const solveButton = document.getElementById('solve-button');
-    solveButton.disabled = true;
-    
-    await visualBacktracking();
-    
-    // Enable lại nút sau khi giải xong
-    solveButton.disabled = false;
+    await tabuleiro.visualBacktracking();
   });
 
   // Xử lý nút Tạo mới
@@ -579,107 +688,6 @@ function handleWrongInput(input) {
 // Thêm hàm delay để tạo hiệu ứng animation
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// Sửa đổi hàm backtracking để thêm animation
-async function visualBacktracking() {
-  const grid = document.getElementById("sudoku-grid");
-  const inputs = grid.getElementsByTagName("input");
-
-  // Điều chỉnh delay dựa trên kích thước bảng
-  const baseDelay = TAM === 16 ? 50 : 100;
-  
-  async function backtrack() {
-    var v_livre = tabuleiro.encontraCor0();
-    if (v_livre == null) {
-      return true;
-    }
-
-    const currentIndex = v_livre.loc[0] * TAM + v_livre.loc[1];
-    
-    // Hiển thị ô đang xét
-    inputs[currentIndex].style.backgroundColor = '#ff6b6b';
-    await delay(baseDelay);
-
-    for (let cor = 1; cor <= TAM; cor++) {
-      if (tabuleiro.colorIsValid(cor, v_livre)) {
-        // Hiển thị giá trị đang thử và màu tương ứng
-        v_livre.setColor(cor);
-        inputs[currentIndex].value = cor;
-        inputs[currentIndex].style.backgroundColor = NUMBER_COLORS[cor];
-        await delay(baseDelay);
-
-        if (await backtrack()) {
-          return true;
-        }
-
-        // Nếu không tìm được giải pháp, quay lui
-        inputs[currentIndex].style.backgroundColor = '#ff8c00';
-        await delay(baseDelay);
-        
-        // Reset giá trị
-        v_livre.setColor(0);
-        inputs[currentIndex].value = '';
-        inputs[currentIndex].style.backgroundColor = '#ff6b6b';
-        await delay(baseDelay);
-      }
-    }
-
-    // Khi đã thử hết các giá trị có thể
-    v_livre.setColor(0);
-    inputs[currentIndex].value = '';
-    inputs[currentIndex].style.backgroundColor = '#ffebee';
-    
-    // Tìm ô trước đó để quay lui
-    let prevIndex = -1;
-    for (let i = currentIndex - 1; i >= 0; i--) {
-      if (!inputs[i].classList.contains("initial-cell") && inputs[i].value !== '') {
-        prevIndex = i;
-        break;
-      }
-    }
-    
-    if (prevIndex !== -1) {
-      // Hiển thị đường đi quay lui
-      await delay(baseDelay);
-      inputs[prevIndex].style.backgroundColor = '#ff6b6b';
-      await delay(baseDelay);
-    }
-    
-    return false;
-  }
-
-  // Disable tất cả input và buttons trong quá trình giải
-  const allInputs = document.getElementsByTagName("input");
-  const buttons = document.getElementsByTagName("button");
-  
-  for (let input of allInputs) {
-    if (!input.classList.contains("initial-cell")) {
-      input.disabled = true;
-    }
-  }
-  
-  for (let button of buttons) {
-    button.disabled = true;
-  }
-
-  try {
-    await backtrack();
-  } finally {
-    // Enable lại input và buttons sau khi giải xong
-    for (let input of allInputs) {
-      if (!input.classList.contains("initial-cell")) {
-        input.disabled = false;
-      }
-    }
-    
-    for (let button of buttons) {
-      button.disabled = false;
-    }
-
-    // Cập nhật lại bảng với kết quả cuối cùng và màu sắc tương ứng
-    updateBoard();
-  }
 }
 
 // Thêm style cho các trạng thái khác nhau
