@@ -1,1 +1,2 @@
-Giải quyết game Sudoku với thuật toán tô màu đồ thị
+Giải quyết game Sudoku với thuật giải tô màu
+
