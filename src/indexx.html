@@ -22,15 +22,19 @@
             <!-- Sudoku board will be dynamically created by JavaScript -->
         </div>
         <div class="bottom-box">
-            <button id="solve-button" class="main-button">Solve Sudoku</button>
+            <button id="solve-button" class="main-button">Solve</button>
             <button id="reset-button" class="main-button">Reset</button>
         </div>
     </div>
-    <div id="unsolvable-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <p>Màn chơi này không thể giải</p>
-        </div>
+    <div id="overlay"></div>
+    <div id="unsolvable-modal">
+        <span class="close-button">&times;</span>
+        <h1>Game Over!</h1>
+        <p>Màn chơi này không thể giải</p>
+        <!-- <div class="button-container">
+            <button class="button retry">CHƠI LẠI</button>
+            <button class="button back">TRỞ LẠI</button>
+        </div> -->
     </div>
     <script src="./script.js"></script>
     <script>

@@ -196,17 +196,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show the modal
     const showUnsolvableModal = () => {
         const modal = document.getElementById('unsolvable-modal');
+        const overlay = document.getElementById('overlay');
         const closeButton = modal.querySelector('.close-button');
 
         modal.style.display = 'block';
+        overlay.style.display = 'block';
 
         closeButton.onclick = () => {
             modal.style.display = 'none';
+            overlay.style.display = 'none';
         };
 
         window.onclick = (event) => {
-            if (event.target === modal) {
+            if (event.target === overlay) {
                 modal.style.display = 'none';
+                overlay.style.display = 'none';
             }
         };
     };
@@ -216,6 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     solveButton.addEventListener('click', () => {
+        solveButton.classList.add('disabled');
+        resetButton.classList.add('disabled');
+
         const cells = board.querySelectorAll('td');
         const sudoku = Array.from(cells).map(cell => {
             const input = cell.querySelector('input');
@@ -223,11 +230,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         colorSudokuGraphAscending(sudoku).then(isSolved => {
+            solveButton.classList.remove('disabled');
+            resetButton.classList.remove('disabled');
             if (isSolved) {
                 cells.forEach((cell, index) => {
                     const input = cell.querySelector('input');
                     input.value = sudoku[index] !== 0 ? sudoku[index] : '';
                 });
+            } else {
+                showUnsolvableModal();
             }
         });
     });
