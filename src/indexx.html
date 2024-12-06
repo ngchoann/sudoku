@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Solver</title>
+    <link rel="stylesheet" href="./stylee.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="main-sudoku">
+        <div class="head">
+            <h4>Sudoku</h4>
+            <!-- <div class="stats">
+                <div class="time">
+                    <p id="tempo">00:00:00</p>
+                </div>
+            </div> -->
+        </div>
+        <div id="sudoku-board">
+            <!-- Sudoku board will be dynamically created by JavaScript -->
+        </div>
+        <div class="bottom-box">
+            <button id="solve-button" class="main-button">Solve Sudoku</button>
+            <button id="reset-button" class="main-button">Reset</button>
+        </div>
+    </div>
+    <div id="unsolvable-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p>Màn chơi này không thể giải</p>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+    <script>
+        particlesJS.load('particles-js', './particles.json', function() {
+            console.log('particles.js loaded - callback');
+        });
+    </script>
+</body>
+</html>
