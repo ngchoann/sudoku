@@ -202,15 +202,16 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'block';
         overlay.style.display = 'block';
 
-        closeButton.onclick = () => {
+        const hideModal = () => {
             modal.style.display = 'none';
             overlay.style.display = 'none';
         };
 
+        closeButton.onclick = hideModal;
+
         window.onclick = (event) => {
-            if (event.target === overlay) {
-                modal.style.display = 'none';
-                overlay.style.display = 'none';
+            if (event.target !== modal && event.target !== closeButton) {
+                hideModal();
             }
         };
     };
@@ -246,4 +247,19 @@ document.addEventListener('DOMContentLoaded', () => {
     resetButton.addEventListener('click', resetBoard);
 
     createBoard();
+
+    const modal = document.getElementById('unsolvable-modal');
+    const overlay = document.getElementById('overlay');
+
+    const hideModal = () => {
+        modal.style.display = 'none';
+        overlay.style.display = 'none';
+    };
+
+    // Hide modal when clicking anywhere on the screen
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('#unsolvable-modal')) {
+            hideModal();
+        }
+    });
 });

@@ -779,3 +779,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const gameOverNotification = document.getElementById('game-over');
+  const closeButton = document.querySelector('.close-button');
+
+  if (gameOverNotification) {
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.game-over-content') && !gameOverNotification.classList.contains('hide')) {
+        gameOverNotification.classList.add('hide');
+      }
+    });
+  }
+
+  if (closeButton) {
+    closeButton.addEventListener('click', () => {
+      gameOverNotification.classList.add('hide');
+    });
+  }
+});

@@ -454,7 +454,7 @@ input.wrong-answer:focus {
 .game-over-content p {
   color: #333;
   font-size: 24px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .game-over-content button {
@@ -880,7 +880,7 @@ input[type="number"]:disabled {
 #solved-notification .game-over-content {
   position: relative;
   background-color: #fff;
-  padding: 40px;
+  padding: 35px 70px 10px;
   border-radius: 15px;
   text-align: center;
   animation: fadeIn 0.5s ease-in-out;
@@ -889,12 +889,14 @@ input[type="number"]:disabled {
 #solved-notification .game-over-content h2 {
   color: #4caf50;
   font-size: 48px;
-  margin-bottom: 20px;
+  margin-top: -110px;
+  font-family: fantasy;
 }
 
 #solved-notification .game-over-content p {
   color: #333;
   font-size: 24px;
+  font-family: cursive;
   /* margin-bottom: 30px; */
 }
 
