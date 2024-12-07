@@ -608,6 +608,25 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('new-game-button').addEventListener('click', () => {
     createNewGame();
   });
+
+  document.getElementById('close-solved-notification').addEventListener('click', () => {
+    document.getElementById('solved-notification').classList.add('hide');
+  });
+
+  // Hide notification when clicking on the overlay
+  document.getElementById('solved-notification').addEventListener('click', (event) => {
+    if (event.target === document.getElementById('solved-notification')) {
+      document.getElementById('solved-notification').classList.add('hide');
+    }
+  });
+
+  // Hide notification when clicking anywhere on the screen
+  document.addEventListener('click', (event) => {
+    const notification = document.getElementById('solved-notification');
+    if (!event.target.closest('.game-over-content') && !notification.classList.contains('hide')) {
+      notification.classList.add('hide');
+    }
+  });
 });
 
 // Khởi tạo game
@@ -620,19 +639,21 @@ updateLivesDisplay();
 
 // Thêm hàm updateBoard để cập nhật giao diện sau khi giải
 function updateBoard() {
-    const grid = document.getElementById("sudoku-grid");
-    const inputs = grid.getElementsByTagName("input");
-    let index = 0;
-    
-    for (let i = 0; i < TAM; i++) {
-        for (let j = 0; j < TAM; j++) {
-            const value = tabuleiro.tabuleiro[i][j].cor;
-            inputs[index].value = value;
-            inputs[index].style.backgroundColor = NUMBER_COLORS[value];
-            inputs[index].classList.add("celula-alterada");
-            index++;
-        }
+  const grid = document.getElementById("sudoku-grid");
+  const inputs = grid.getElementsByTagName("input");
+  let index = 0;
+  
+  for (let i = 0; i < TAM; i++) {
+    for (let j = 0; j < TAM; j++) {
+      const value = tabuleiro.tabuleiro[i][j].cor;
+      inputs[index].value = value;
+      inputs[index].style.backgroundColor = NUMBER_COLORS[value];
+      inputs[index].classList.add("celula-alterada");
+      index++;
     }
+  }
+  
+  checkIfSolved();
 }
 
 // Sửa lại hàm createNewGame để tạo bảng mới hoàn toàn
@@ -718,3 +739,43 @@ function isSolved() {
   }
   return true;
 }
+
+function checkIfSolved() {
+  if (isSolved()) {
+    const solvedNotification = document.getElementById('solved-notification');
+    solvedNotification.classList.remove('hide');
+  }
+}
+
+// Add event listeners for solved notification buttons
+document.addEventListener('DOMContentLoaded', function() {
+  // ... existing code ...
+
+  document.getElementById('new-game-solved-button').addEventListener('click', () => {
+    document.getElementById('solved-notification').classList.add('hide');
+    createNewGame();
+  });
+
+  document.getElementById('back-to-menu-solved').addEventListener('click', () => {
+    window.location.href = './index.html';
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const solvedNotification = document.getElementById('solved-notification');
+  const closeButton = document.getElementById('close-solved-notification');
+
+  if (solvedNotification) {
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.game-over-content') && !solvedNotification.classList.contains('hide')) {
+        solvedNotification.classList.add('hide');
+      }
+    });
+  }
+
+  if (closeButton) {
+    closeButton.addEventListener('click', () => {
+      solvedNotification.classList.add('hide');
+    });
+  }
+});

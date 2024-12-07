@@ -439,7 +439,7 @@ input.wrong-answer:focus {
 
 .game-over-content {
   background-color: #fff;
-  padding: 40px;
+  /* padding: 20px; */
   border-radius: 15px;
   text-align: center;
   animation: fadeIn 0.5s ease-in-out;
@@ -454,7 +454,7 @@ input.wrong-answer:focus {
 .game-over-content p {
   color: #333;
   font-size: 24px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .game-over-content button {
@@ -862,4 +862,53 @@ input[type="number"]:disabled {
 
 .size-button:hover {
     transform: scale(1.05);
+}
+
+#solved-notification {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#solved-notification .game-over-content {
+  position: relative;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#solved-notification .game-over-content h2 {
+  color: #4caf50;
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+#solved-notification .game-over-content p {
+  color: #333;
+  font-size: 24px;
+  /* margin-bottom: 30px; */
+}
+
+.close-button {
+  /* display: block; */
+  /* margin-bottom: 20px; */
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: #ff5252;
 }
